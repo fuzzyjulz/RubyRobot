@@ -1,8 +1,4 @@
-require_relative "entities/boundary_coordinates"
-require_relative "entities/table"
-require_relative "entities/coordinate"
-require_relative "controller/command_controller"
-require_relative "errors/out_of_boundary_error"
+require "requires"
 require "pry"
 
 

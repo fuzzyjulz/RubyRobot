@@ -7,13 +7,11 @@ module RubyRobot
     end
     
     def +(coordinate)
-      @x += coordinate.x
-      @y += coordinate.y
+      Coordinate.new(@x + coordinate.x, @y + coordinate.y)
     end
     
     def -(coordinate)
-      @x -= coordinate.x
-      @y -= coordinate.y
+      Coordinate.new(@x - coordinate.x, @y - coordinate.y)
     end
     
     def ==(coordinate)
@@ -21,7 +19,7 @@ module RubyRobot
     end
     
     def to_s()
-      "["+@x+","+@y+"]"
+      "[#{@x},#{@y}]"
     end
   end
 end

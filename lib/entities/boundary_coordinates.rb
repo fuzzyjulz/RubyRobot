@@ -6,8 +6,8 @@ module RubyRobot
       @max = max_coordinate
 
       if (@min.x > @max.x or @min.y > @max.y)
-        raise DimensionException,
-            "The minimum dimensions #{@min} must be greater than the maximum dimension  #{maxDimension} for a surface"
+        raise OutOfBoundaryError,
+            "The minimum dimensions #{@min} must be greater than the maximum dimension  #{@max} for a surface"
       end
     end
     
