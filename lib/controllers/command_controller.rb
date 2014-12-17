@@ -7,9 +7,10 @@ module RubyRobot
                 report: "REPORT",
                 exit: "EXIT"}.invert
                 
-    attr_reader :robot
+    attr_reader :robot, :ui, :table
     
-    def initialize(table)
+    def initialize(ui, table)
+      @ui = ui
       @table = table
       @finished = false
     end
@@ -21,32 +22,50 @@ module RubyRobot
       if !command_sym.nil?
         send("interpret_#{command_sym}", command_arr[1])
       else
-        raise CommandException, "'#{command_str}' Command not recognised."
+        raise CommandError, "'#{command_str}' Command not recognised."
       end
     end
     
     def interpret_place(command)
-      matches = command.match(/^\s*(\d+)\s*,\s*(\d+)/)
-      xpos = matches[1]
-      ypos = matches[2]
+      matches = command.upcase.match(/^\s*(\d+)\s*,\s*(\d+)\s*,\s*(NORTH|SOUTH|EAST|WEST)/)
+      raise CommandError, "Invalid place command." if matches.nil?
       
-      raise CommandException, "Invalid place command." if xpos.nil? or ypos.nil?
+      xpos = matches[1].to_i
+      ypos = matches[2].to_i
+      direction = matches[3]
+      
+      coords = Coordinate.new(xpos, ypos)
+      direction = Direction[direction]
+      
+      if @robot.nil?
+        @robot = Robot.new(coords, direction, @table)
+      else
+        @robot.place(coords, direction, @table)
+      end
     end
 
+    def ensure_placed
+      raise CommandError, "The robot must be PLACEd first." if @robot.nil?
+    end
+    
     def interpret_left(command)
-      robot.left
+      ensure_placed
+      @robot.rotate_left
     end
     
     def interpret_right(command)
-      robot.right
+      ensure_placed
+      @robot.rotate_right
     end
     
     def interpret_move(command)
-      robot.move
+      ensure_placed
+      @robot.move_forward
     end
     
     def interpret_report(command)
-      robot.report
+      ensure_placed
+      @ui.write_text @robot.report
     end
     
     def interpret_exit(command)

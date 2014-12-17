@@ -17,7 +17,7 @@ module RubyRobot
     end
     
     describe "#within_bounds?" do
-      let (:bc) {BoundaryCoordinates.new(Coordinate.new(0,0), Coordinate.new(4,5))}
+      let(:bc) {BoundaryCoordinates.new(Coordinate.new(0,0), Coordinate.new(4,5))}
       it "is within bounds" do
         expect(bc.within_bounds?(Coordinate.new(0,0))).to eq(true)
         expect(bc.within_bounds?(Coordinate.new(4,0))).to eq(true)

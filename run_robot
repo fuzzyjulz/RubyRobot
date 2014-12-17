@@ -1,0 +1,3 @@
+#!/bin/bash
+ruby lib/run_robot.rb
+
