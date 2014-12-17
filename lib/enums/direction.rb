@@ -1,4 +1,6 @@
 module RubyRobot
+  #Represents a direction, can translate into degrees and back to handle going
+  # more than one full circle
   class Direction
     private
     def initialize(degrees, coordinate_component)
@@ -23,6 +25,7 @@ module RubyRobot
     
     attr_reader :degrees, :coordinate_component
     
+    #Get the related direction for the String or the degrees given 
     def self.[](index)
       type = index.class
       if type == String or type == Symbol
@@ -39,6 +42,7 @@ module RubyRobot
       end
     end
     
+    #The name of the directions
     def name
       ALL.each_pair do |name, direction|
         return name.to_s if direction == self
