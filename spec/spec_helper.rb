@@ -1,6 +1,6 @@
 require_relative '../lib/requires'
-require 'pry'
 
+#A mock UI to be able to assert against the output
 class RecordLastUiImpl
   attr_reader :last_output
   attr_writer :next_input
